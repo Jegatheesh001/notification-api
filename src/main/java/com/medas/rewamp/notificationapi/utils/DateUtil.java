@@ -1,4 +1,4 @@
-package com.medas.rewamp.frontdesk.utils;
+package com.medas.rewamp.notificationapi.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

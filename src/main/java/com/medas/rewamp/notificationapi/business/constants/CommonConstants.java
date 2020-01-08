@@ -16,5 +16,6 @@ public class CommonConstants {
 
 	public static final String NOT_AVAILABLE = "Not available";
 	public static final String SUCCESS = "success";
+	public static final String INVALID_CLIENT = "Not a valid Client";
 	
 }
