@@ -40,11 +40,11 @@ public class NotificationDaoImpl implements NotificationDao {
 	public void updateNotificationDetails(NotificationParamVO paramVO, Integer clientId) {
 		String queryStr = "update NotificationDetails set notificationId = :notificationId, notificationTemplate = :notificationTemplate "
 				+ "where referId = :referId and referType = :referType "
-				+ "and cancelNotificationDetails.clientId = :clientId and branchId = :branchId ";
+				+ "and clientDetails.clientId = :clientId and branchId = :branchId ";
 		em.createQuery(queryStr).setParameter("notificationId", paramVO.getNotificationId())
 				.setParameter("notificationTemplate", paramVO.getNotificationTemplate())
 				.setParameter("referId", paramVO.getReferId()).setParameter("referType", paramVO.getReferType())
-				.setParameter("clientId", paramVO.getClientId()).setParameter("branchId", paramVO.getBranchId())
+				.setParameter("clientId", clientId).setParameter("branchId", paramVO.getBranchId())
 				.executeUpdate();
 	}
 
@@ -52,9 +52,9 @@ public class NotificationDaoImpl implements NotificationDao {
 	public void cancelNotificationDetails(NotificationParamVO paramVO, Integer clientId) {
 		String queryStr = "update NotificationDetails set activeStatus = 'N' "
 				+ "where activeStatus = 'Y' and referId = :referId and referType = :referType "
-				+ "and cancelNotificationDetails.clientId = :clientId and branchId = :branchId ";
+				+ "and clientDetails.clientId = :clientId and branchId = :branchId ";
 		em.createQuery(queryStr).setParameter("referId", paramVO.getReferId())
-				.setParameter("referType", paramVO.getReferType()).setParameter("clientId", paramVO.getClientId())
+				.setParameter("referType", paramVO.getReferType()).setParameter("clientId", clientId)
 				.setParameter("branchId", paramVO.getBranchId()).executeUpdate();
 	}
 

@@ -2,6 +2,8 @@ package com.medas.rewamp.notificationapi.service;
 
 import java.time.LocalDateTime;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import com.medas.rewamp.notificationapi.business.constants.CommonConstants;
@@ -52,6 +54,7 @@ public class NotificationService {
 		return response;
 	}
 
+	@Transactional
 	public ApiResponse<Void> cancelNotificationDetails(NotificationParamVO paramVO) {
 		ApiResponse<Void> response = null;
 		Integer clientId = dao.validateClient(paramVO);
