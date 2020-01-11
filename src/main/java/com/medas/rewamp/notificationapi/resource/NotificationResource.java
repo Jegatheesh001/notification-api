@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.medas.rewamp.notificationapi.business.vo.ApiResponse;
 import com.medas.rewamp.notificationapi.business.vo.NotificationParamVO;
+import com.medas.rewamp.notificationapi.configuration.aspects.Loggable;
 import com.medas.rewamp.notificationapi.service.NotificationService;
+
+import io.swagger.annotations.ApiOperation;
 
 /**
  * @author jegatheesh.mageswaran<br>
@@ -18,23 +21,29 @@ import com.medas.rewamp.notificationapi.service.NotificationService;
  *
  */
 @RestController
-@RequestMapping("/notification")
+@RequestMapping("/v1/notification")
 public class NotificationResource {
 
 	@Autowired
 	NotificationService service;
 	
+	@Loggable
 	@PostMapping
+	@ApiOperation(value = "API for saving notification details from client", notes = "Provide all the parameters")
 	public ApiResponse<Void> saveNotificationDetails(@RequestBody NotificationParamVO paramVO) {
 		return service.saveNotificationDetails(paramVO);
 	}
 	
+	@Loggable
 	@PutMapping
+	@ApiOperation(value = "API for updating notification details from client", notes = "Provide all the parameters")
 	public ApiResponse<Void> updateNotificationDetails(@RequestBody NotificationParamVO paramVO) {
 		return service.updateNotificationDetails(paramVO);
 	}
 	
+	@Loggable
 	@PutMapping("/{referId}")
+	@ApiOperation(value = "API for deactive notification details trigger", notes = "Provide all the parameters")
 	public ApiResponse<Void> cancelNotificationDetails(@PathVariable Integer referId, @RequestBody NotificationParamVO paramVO) {
 		return service.cancelNotificationDetails(paramVO);
 	}

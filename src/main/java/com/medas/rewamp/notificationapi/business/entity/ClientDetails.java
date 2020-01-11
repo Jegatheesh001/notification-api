@@ -22,6 +22,9 @@ public class ClientDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer clientId;
 	
+	/**
+	 * Unique client Identification Id
+	 */
 	private String clientUid;
 	
 	private String clientName;

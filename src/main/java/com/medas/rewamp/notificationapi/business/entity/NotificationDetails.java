@@ -13,43 +13,78 @@ import javax.persistence.Table;
 import lombok.Data;
 
 /**
+ * Entity mapping for notification_details table
+ * 
  * @author jegatheesh.mageswaran<br>
 		   <b>Created</b> On Jan 8, 2020
  *
  */
 @Data
 @Entity
-@Table(name = "Notification_Details")
+@Table(name = "notification_details")
 public class NotificationDetails {
 
+	/**
+	 * Primary Key
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer detailId;
 	
+	/**
+	 * Notification reference type (to distinguish notification of multiple module). eg app/reg
+	 */
 	private String referType;
 	
+	/**
+	 * Reference Id for Reference type
+	 */
 	private Integer referId;
 	
+	/**
+	 * Type of Notification eg. sms/email
+	 */
 	private String notificationType;
 	
+	/**
+	 * Notification Id eg. Mobile No/ E-mail id
+	 */
 	private String notificationId;
 	
+	/**
+	 * Notification Message
+	 */
 	private String notificationTemplate;
 	
+	/**
+	 * Notification Time (Time which notification needs to send)
+	 */
 	private LocalDateTime notificationTime;
 	
+	/**
+	 * Notified Time (Time which notification send)
+	 */
 	private LocalDateTime doneTime;
 	
+	/**
+	 * Notification Active status
+	 */
 	private String activeStatus;
 	
+	/**
+	 * Client Id
+	 */
 	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
 	private ClientDetails clientDetails;
 	
+	/**
+	 * Branch Id of client
+	 */
 	private Integer branchId;
 
 	/**
-	 * Inserting data
+	 * Inserting data to NotificationDetails table
 	 * 
 	 * @param referType
 	 * @param referId
