@@ -1,7 +1,5 @@
 package com.medas.rewamp.notificationapi.service;
 
-import java.time.LocalDateTime;
-
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;

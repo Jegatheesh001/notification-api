@@ -2,12 +2,14 @@ package com.medas.rewamp.notificationapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author jegatheesh.mageswaran<br>
  *         <b>Created</b> On Jan 8, 2020
  *
  */
+@EnableScheduling
 @SpringBootApplication
 public class NotificationApiApplication {
 

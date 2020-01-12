@@ -18,4 +18,7 @@ public class CommonConstants {
 	public static final String SUCCESS = "success";
 	public static final String INVALID_CLIENT = "Not a valid Client";
 	
+	public static final String SMS = "sms";
+	public static final String EMAIL = "email";
+	public static final String HTTP = "http";
 }
