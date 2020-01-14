@@ -57,7 +57,7 @@ public class NotificationDaoImpl implements NotificationDao {
 	@Override
 	public void cancelNotificationDetails(NotificationParamVO paramVO, Integer clientId) {
 		String queryStr = "update NotificationDetails set activeStatus = 'N' "
-				+ "where activeStatus = 'Y' and referId = :referId and referType = :referType "
+				+ "where activeStatus = 'Y' and instant = 'N' and referId = :referId and referType = :referType "
 				+ "and clientDetails.clientId = :clientId and branchId = :branchId ";
 		em.createQuery(queryStr).setParameter("referId", paramVO.getReferId())
 				.setParameter("referType", paramVO.getReferType()).setParameter(QueryConstants.CLIENT_ID, clientId)

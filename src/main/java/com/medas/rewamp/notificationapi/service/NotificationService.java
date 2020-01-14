@@ -31,7 +31,7 @@ public class NotificationService {
 		if (clientId != null) {
 			NotificationDetails entity = new NotificationDetails(paramVO.getReferType(), paramVO.getReferId(),
 					paramVO.getNotificationType(), paramVO.getNotificationId(), paramVO.getNotificationTemplate(),
-					paramVO.getNotificationTime(), clientId, paramVO.getBranchId());
+					paramVO.getInstant(), paramVO.getNotificationTime(), clientId, paramVO.getBranchId());
 			repository.save(entity);
 			response = new ApiResponse<>(true);
 		} else {

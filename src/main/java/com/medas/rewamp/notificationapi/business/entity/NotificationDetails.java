@@ -67,6 +67,11 @@ public class NotificationDetails {
 	private LocalDateTime doneTime;
 	
 	/**
+	 * Instant Message Status
+	 */
+	private String instant;
+	
+	/**
 	 * Notification Active status
 	 */
 	private String activeStatus;
@@ -91,18 +96,20 @@ public class NotificationDetails {
 	 * @param notificationType
 	 * @param notificationId
 	 * @param notificationTemplate
+	 * @param instant
 	 * @param notificationTime
 	 * @param clientId
 	 * @param branchId
 	 */
 	public NotificationDetails(String referType, Integer referId, String notificationType, String notificationId,
-			String notificationTemplate, LocalDateTime notificationTime, Integer clientId, Integer branchId) {
+			String notificationTemplate, String instant, LocalDateTime notificationTime, Integer clientId, Integer branchId) {
 		super();
 		this.referType = referType;
 		this.referId = referId;
 		this.notificationType = notificationType;
 		this.notificationId = notificationId;
 		this.notificationTemplate = notificationTemplate;
+		this.instant = instant;
 		this.notificationTime = notificationTime;
 		this.clientDetails = new ClientDetails(clientId);
 		this.branchId = branchId;
