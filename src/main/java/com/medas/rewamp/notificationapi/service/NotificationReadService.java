@@ -1,7 +1,5 @@
 package com.medas.rewamp.notificationapi.service;
 
-import static com.medas.rewamp.notificationapi.utils.StringUtil.encodeString;
-
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -54,7 +52,8 @@ public class NotificationReadService {
 			SmsVendorVO vendor = dao.getVendorDetails(data);
 			// HTTP
 			if (vendor != null && vendor.getType().equals(CommonConstants.HTTP)) {
-				String url = vendor.getUrl().replace("#msg#", encodeString(data.getNotificationTemplate())).replace("#mobileno#", data.getNotificationId());
+				String url = vendor.getUrl().replace("#msg#", data.getNotificationTemplate()).replace("#mobileno#", data.getNotificationId());
+				log.info("SMS details: {}", data);
 				uriConnect.sendHTTPRequest(url);
 				done = true;
 			}
