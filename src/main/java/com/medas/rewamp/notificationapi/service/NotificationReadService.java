@@ -1,20 +1,20 @@
 package com.medas.rewamp.notificationapi.service;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import static com.medas.rewamp.notificationapi.utils.StringUtil.encodeString;
+
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.medas.rewamp.notificationapi.business.constants.CommonConstants;
+import com.medas.rewamp.notificationapi.business.vo.MailSetupVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationVO;
 import com.medas.rewamp.notificationapi.business.vo.SmsVendorVO;
 import com.medas.rewamp.notificationapi.persistence.NotificationDao;
+import com.medas.rewamp.notificationapi.utils.MailSender;
+import com.medas.rewamp.notificationapi.utils.URIConnector;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +32,10 @@ import lombok.extern.slf4j.Slf4j;
 public class NotificationReadService {
 
 	NotificationDao dao;
-
-	RestTemplate restTemplate;
+	
+	URIConnector uriConnect;
+	
+	MailSender mailSender;
 
 	@Transactional
 	public void readActiveNotifications() {
@@ -53,47 +55,15 @@ public class NotificationReadService {
 			// HTTP
 			if (vendor != null && vendor.getType().equals(CommonConstants.HTTP)) {
 				String url = vendor.getUrl().replace("#msg#", encodeString(data.getNotificationTemplate())).replace("#mobileno#", data.getNotificationId());
-				sendHTTPRequest(url);
+				uriConnect.sendHTTPRequest(url);
 				done = true;
 			}
+		} else if(notificationType.equals(CommonConstants.EMAIL)) {
+			MailSetupVO mailSetup = dao.getMailAuthenticationDetails(data);
+			mailSender.sendMail(mailSetup, data);
 		}
 		if (done) {
 			dao.updateNotificationDoneStatus(data);
-		}
-	}
-
-	/**
-	 * To encode content string
-	 * 
-	 * @param content
-	 * @return
-	 */
-	private CharSequence encodeString(String content) {
-		try {
-			return URLEncoder.encode(content, StandardCharsets.UTF_8.toString());
-		} catch (UnsupportedEncodingException e) {
-			log.error("Error on encoding string: {}", e.getMessage());
-			return content;
-		}
-	}
-
-	/**
-	 * Getting response from url
-	 * 
-	 * @param url
-	 * @return
-	 */
-	private boolean sendHTTPRequest(String url) {
-		log.info("Url: {}", url);
-		try {
-			ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-			if (response.getStatusCodeValue() == 200) {
-				log.info("Response: " + response.getBody());
-			}
-			return true;
-		} catch (Exception e) {
-			log.info("Error: " + e.getMessage());
-			return false;
 		}
 	}
 

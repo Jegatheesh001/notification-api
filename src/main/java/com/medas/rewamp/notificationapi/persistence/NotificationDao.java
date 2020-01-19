@@ -2,6 +2,7 @@ package com.medas.rewamp.notificationapi.persistence;
 
 import java.util.List;
 
+import com.medas.rewamp.notificationapi.business.vo.MailSetupVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationParamVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationVO;
 import com.medas.rewamp.notificationapi.business.vo.SmsVendorVO;
@@ -19,5 +20,7 @@ public interface NotificationDao {
 	public void updateNotificationDoneStatus(NotificationVO paramVO);
 
 	public SmsVendorVO getVendorDetails(NotificationVO data);
+
+	public MailSetupVO getMailAuthenticationDetails(NotificationVO data);
 	
 }

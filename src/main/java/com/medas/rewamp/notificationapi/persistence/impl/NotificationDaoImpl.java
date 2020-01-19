@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.medas.rewamp.notificationapi.business.constants.QueryConstants;
+import com.medas.rewamp.notificationapi.business.vo.MailSetupVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationParamVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationVO;
 import com.medas.rewamp.notificationapi.business.vo.SmsVendorVO;
@@ -89,6 +90,18 @@ public class NotificationDaoImpl implements NotificationDao {
 				+ "from SmsVendors where client.clientId = :clientId and branchId = :branchId";
 		try {
 			return (SmsVendorVO) em.createQuery(queryStr).setParameter(QueryConstants.CLIENT_ID, data.getClientId())
+					.setParameter(QueryConstants.BRANCH_ID, data.getBranchId()).getSingleResult();
+		} catch (javax.persistence.NoResultException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public MailSetupVO getMailAuthenticationDetails(NotificationVO data) {
+		String queryStr = "select new com.medas.rewamp.notificationapi.business.vo.MailSetupVO(authMail, authPassword, authProperties) "
+				+ "from MailSetup where client.clientId = :clientId and branchId = :branchId";
+		try {
+			return (MailSetupVO) em.createQuery(queryStr).setParameter(QueryConstants.CLIENT_ID, data.getClientId())
 					.setParameter(QueryConstants.BRANCH_ID, data.getBranchId()).getSingleResult();
 		} catch (javax.persistence.NoResultException e) {
 			return null;
