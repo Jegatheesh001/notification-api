@@ -1,12 +1,15 @@
 package com.medas.rewamp.notificationapi.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.medas.rewamp.notificationapi.business.constants.CommonConstants;
+import com.medas.rewamp.notificationapi.business.vo.MailAttachmentVO;
 import com.medas.rewamp.notificationapi.business.vo.MailSetupVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationVO;
 import com.medas.rewamp.notificationapi.business.vo.SmsVendorVO;
@@ -38,10 +41,27 @@ public class NotificationReadService {
 	@Transactional
 	public void readActiveNotifications() {
 		List<NotificationVO> dataList = dao.getAllActiveNotifications();
+		List<MailAttachmentVO> attachments = dao.getAllMailAttachments();
+		mapMailAttachments(dataList, attachments);
 		log.info("Total Notifications: {}", dataList.size());
 		for (NotificationVO data : dataList) {
 			processNotificationData(data);
 		}
+	}
+
+	/**
+	 * Mapping all attachments to notifications
+	 * 
+	 * @param dataList
+	 * @param attachments
+	 */
+	private void mapMailAttachments(List<NotificationVO> dataList, List<MailAttachmentVO> attachments) {
+		Map<Integer, List<MailAttachmentVO>> mapData = attachments.stream().collect(Collectors.groupingBy(MailAttachmentVO::getNotificationId));
+		dataList.forEach(data -> {
+			if (mapData.get(data.getDetailId()) != null) {
+				data.setAttachments(mapData.get(data.getDetailId()));
+			}
+		});
 	}
 
 	private void processNotificationData(NotificationVO data) {

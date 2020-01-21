@@ -2,6 +2,7 @@ package com.medas.rewamp.notificationapi.business.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,6 +46,12 @@ public class NotificationDetails {
 	 * Type of Notification eg. sms/email
 	 */
 	private String notificationType;
+	
+	/**
+	 * Notification subject
+	 */
+	@Column(nullable = true)
+	private String notificationSubject;
 	
 	/**
 	 * Notification Id eg. Mobile No/ E-mail id

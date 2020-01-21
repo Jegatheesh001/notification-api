@@ -2,6 +2,7 @@ package com.medas.rewamp.notificationapi.persistence;
 
 import java.util.List;
 
+import com.medas.rewamp.notificationapi.business.vo.MailAttachmentVO;
 import com.medas.rewamp.notificationapi.business.vo.MailSetupVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationParamVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationVO;
@@ -16,6 +17,8 @@ public interface NotificationDao {
 	public void cancelNotificationDetails(NotificationParamVO paramVO, Integer clientId);
 
 	public List<NotificationVO> getAllActiveNotifications();
+	
+	public List<MailAttachmentVO> getAllMailAttachments();
 
 	public void updateNotificationDoneStatus(NotificationVO paramVO);
 

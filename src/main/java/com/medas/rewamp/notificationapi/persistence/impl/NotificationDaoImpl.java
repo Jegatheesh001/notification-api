@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.medas.rewamp.notificationapi.business.constants.QueryConstants;
+import com.medas.rewamp.notificationapi.business.vo.MailAttachmentVO;
 import com.medas.rewamp.notificationapi.business.vo.MailSetupVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationParamVO;
 import com.medas.rewamp.notificationapi.business.vo.NotificationVO;
@@ -22,6 +23,7 @@ import com.medas.rewamp.notificationapi.persistence.NotificationDao;
 		   <b>Created</b> On Jan 8, 2020
  *
  */
+@SuppressWarnings("unchecked")
 @Repository
 public class NotificationDaoImpl implements NotificationDao {
 	
@@ -65,15 +67,26 @@ public class NotificationDaoImpl implements NotificationDao {
 				.setParameter(QueryConstants.BRANCH_ID, paramVO.getBranchId()).executeUpdate();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<NotificationVO> getAllActiveNotifications() {
+		LocalDateTime currentTime = LocalDateTime.now();
 		String queryStr = "select new com.medas.rewamp.notificationapi.business.vo.NotificationVO(detailId, notificationType, "
-				+ "notificationId, notificationTemplate, clientDetails.clientId, branchId) "
+				+ "notificationSubject, notificationId, notificationTemplate, clientDetails.clientId, branchId) "
 				+ "from NotificationDetails where activeStatus = 'Y' "
 				+ "and notificationTime>= :startTime and notificationTime<= :notificationTime";
-		return em.createQuery(queryStr).setParameter("startTime", LocalDateTime.now().minusDays(1))
-				.setParameter("notificationTime", LocalDateTime.now()).getResultList();
+		return em.createQuery(queryStr).setParameter("startTime", currentTime.minusDays(1))
+				.setParameter("notificationTime", currentTime).getResultList();
+	}
+	
+	@Override
+	public List<MailAttachmentVO> getAllMailAttachments() {
+		LocalDateTime currentTime = LocalDateTime.now();
+		String queryStr = "select new com.medas.rewamp.notificationapi.business.vo.MailAttachmentVO(nd.detailId, "
+				+ "ma.attachmentName, ma.attachmentType, ma.attachment, ma.fileExtension) "
+				+ "from MailAttachment ma inner join ma.notification nd "
+				+ "where nd.activeStatus = 'Y' and nd.notificationTime>= :startTime and nd.notificationTime<= :notificationTime";
+		return em.createQuery(queryStr).setParameter("startTime", currentTime.minusDays(1))
+				.setParameter("notificationTime", currentTime).getResultList();
 	}
 	
 	@Override
