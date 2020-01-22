@@ -21,4 +21,7 @@ public class CommonConstants {
 	public static final String SMS = "sms";
 	public static final String EMAIL = "email";
 	public static final String HTTP = "http";
+	
+	public static final String INLINE = "inline";
+	public static final String ATTACHMENT = "attachment";
 }
