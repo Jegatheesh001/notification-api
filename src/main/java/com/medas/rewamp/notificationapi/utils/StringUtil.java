@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import org.springframework.stereotype.Component;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -14,27 +16,10 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
+@Component
 public class StringUtil {
 
 	private StringUtil() {
-	}
-
-	/**
-	 * Setting data to base template
-	 * 
-	 * @param birthdayTemplate
-	 * @param data
-	 * @return
-	 */
-	public static String getString(String content, Object... datas) {
-		String formatted = content;
-		String dataHolder = "\\{\\}";
-		if (datas != null) {
-			for (Object data : datas) {
-				formatted = formatted.replaceFirst(dataHolder, data.toString());
-			}
-		}
-		return formatted;
 	}
 	
 	/**

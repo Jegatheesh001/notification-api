@@ -80,6 +80,7 @@ public class NotificationReadService {
 		} else if(notificationType.equals(CommonConstants.EMAIL)) {
 			MailSetupVO mailSetup = dao.getMailAuthenticationDetails(data);
 			mailSender.sendMail(mailSetup, data);
+			done = true;
 		}
 		if (done) {
 			dao.updateNotificationDoneStatus(data);

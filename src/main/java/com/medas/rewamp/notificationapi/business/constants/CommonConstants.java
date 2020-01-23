@@ -24,4 +24,7 @@ public class CommonConstants {
 	
 	public static final String INLINE = "inline";
 	public static final String ATTACHMENT = "attachment";
+	
+	public static final String DOT = ".";
+	public static final String UNDERSCORE = "_";
 }

@@ -1,9 +1,6 @@
 package com.medas.rewamp.notificationapi.utils;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
@@ -24,6 +21,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
@@ -51,6 +49,9 @@ public class MailSender {
 
 	@Value("${app.path.attachments}")
 	private String attachPath;
+
+	@Autowired
+	private FileUtil fileUtil;
 
 	/**
 	 * This method will run in separate thread to send mail
@@ -125,13 +126,16 @@ public class MailSender {
 			for (MailAttachmentVO attachment : attachments) {
 				bodyPart = new MimeBodyPart();
 				String fileName = getFile(attachment.getAttachment(), attachment);
+				// if error on saving file, skipping attachment
+				if (fileName == null) {
+					continue;
+				}
 				DataSource source = new FileDataSource(attachPath + fileName);
 				bodyPart.setDataHandler(new DataHandler(source));
 				if (CommonConstants.INLINE.equals(attachment.getAttachmentType())) {
 					bodyPart.setHeader("Content-ID", "<" + attachment.getAttachmentName() + ">");
-				} else {
-					bodyPart.setFileName(fileName);
 				}
+				bodyPart.setFileName(fileName);
 				multipart.addBodyPart(bodyPart);
 			}
 		}
@@ -145,13 +149,14 @@ public class MailSender {
 	 * @return String FilePath
 	 */
 	private String getFile(String fileData, MailAttachmentVO attachment) {
-		byte[] data = Base64.getDecoder().decode(fileData);
-		String fileName = DateUtil.formatDate("8", new Date()) + attachment.getAttachmentName() + "."
-				+ attachment.getFileExtension();
-		try (OutputStream stream = new FileOutputStream(attachPath + fileName)) {
-			stream.write(data);
-		} catch (IOException e) {
-			log.error("Error on saving file: ", e);
+		String fileName = DateUtil.formatDate("8", new Date()) + CommonConstants.UNDERSCORE
+				+ attachment.getAttachmentName() + CommonConstants.DOT + attachment.getFileExtension();
+		try {
+			fileUtil.saveBase64ToFile(fileData, attachPath + fileName);
+		} catch (IOException | IllegalArgumentException e) {
+			log.error("Error on saving file: [{}] path: [{}] error: [{}]", attachment.getAttachmentName(), fileName,
+					e.getMessage());
+			return null;
 		}
 		return fileName;
 	}
