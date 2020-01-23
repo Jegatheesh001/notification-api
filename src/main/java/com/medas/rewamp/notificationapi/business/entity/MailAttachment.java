@@ -38,4 +38,18 @@ public class MailAttachment {
 	private String attachment;
 	
 	private String fileExtension;
+
+	/**
+	 * Constructors starts here
+	 *
+	 */
+	public MailAttachment(Integer notificationId, String attachmentName, String attachmentType,
+			String attachment, String fileExtension) {
+		super();
+		this.notification = new NotificationDetails(notificationId);
+		this.attachmentName = attachmentName;
+		this.attachmentType = attachmentType;
+		this.attachment = attachment;
+		this.fileExtension = fileExtension;
+	}
 }

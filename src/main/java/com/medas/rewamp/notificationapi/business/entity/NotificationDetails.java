@@ -94,6 +94,16 @@ public class NotificationDetails {
 	 * Branch Id of client
 	 */
 	private Integer branchId;
+	
+	/**
+	 * Constructors starts here
+	 *
+	 */
+	
+	public NotificationDetails(Integer detailId) {
+		super();
+		this.detailId = detailId;
+	}
 
 	/**
 	 * Inserting data to NotificationDetails table
@@ -109,13 +119,14 @@ public class NotificationDetails {
 	 * @param branchId
 	 */
 	public NotificationDetails(String referType, Integer referId, String notificationType, String notificationId,
-			String notificationTemplate, String instant, LocalDateTime notificationTime, Integer clientId, Integer branchId) {
+			String notificationTemplate, String notificationSubject, String instant, LocalDateTime notificationTime, Integer clientId, Integer branchId) {
 		super();
 		this.referType = referType;
 		this.referId = referId;
 		this.notificationType = notificationType;
 		this.notificationId = notificationId;
 		this.notificationTemplate = notificationTemplate;
+		this.notificationSubject = notificationSubject;
 		this.instant = instant;
 		this.notificationTime = notificationTime;
 		this.clientDetails = new ClientDetails(clientId);
