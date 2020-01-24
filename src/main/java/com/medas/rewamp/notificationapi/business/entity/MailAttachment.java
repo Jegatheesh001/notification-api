@@ -1,5 +1,6 @@
 package com.medas.rewamp.notificationapi.business.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,16 +28,20 @@ public class MailAttachment {
 	@ManyToOne
 	@JoinColumn(name = "notification_id", nullable = false)
 	private NotificationDetails notification;
+	@Column(nullable = false)
 	private String attachmentName;
 	/**
 	 * Attachment Type eg.inline/attachment
 	 */
+	@Column(nullable = false)
 	private String attachmentType;
 	/**
 	 * Attachment (base64 content)
 	 */
+	@Column(columnDefinition = "TEXT", nullable = false)
 	private String attachment;
 	
+	@Column(nullable = false)
 	private String fileExtension;
 
 	/**

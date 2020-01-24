@@ -1,5 +1,6 @@
 package com.medas.rewamp.notificationapi.business.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,20 +38,24 @@ public class MailSetup {
 	/**
 	 * Branch Id of client
 	 */
+	@Column(nullable = false)
 	private Integer branchId;
 	
 	/**
 	 * Authentication mail
 	 */
+	@Column(nullable = false)
 	private String authMail;
 	
 	/**
 	 * Authentication password
 	 */
+	@Column(nullable = false)
 	private String authPassword;
 	
 	/**
 	 * Authentication properties eg. port, protocol
 	 */
+	@Column(nullable = false)
 	private String authProperties;
 }

@@ -1,5 +1,6 @@
 package com.medas.rewamp.notificationapi.business.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,16 +28,19 @@ public class SmsVendors {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer vendorId;
 	
+	@Column(nullable = false)
 	private String vendorName;
 	
 	/**
 	 * API type eg. http/basic
 	 */
+	@Column(nullable = false)
 	private String apiType;
 	
 	/**
 	 * API url
 	 */
+	@Column(nullable = false)
 	private String url;
 	
 	/**
@@ -49,5 +53,6 @@ public class SmsVendors {
 	/**
 	 * Branch Id of client
 	 */
+	@Column(nullable = false)
 	private Integer branchId;
 }

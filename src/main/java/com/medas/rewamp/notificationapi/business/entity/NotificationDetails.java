@@ -35,16 +35,19 @@ public class NotificationDetails {
 	/**
 	 * Notification reference type (to distinguish notification of multiple module). eg app/reg
 	 */
+	@Column(nullable = false)
 	private String referType;
 	
 	/**
 	 * Reference Id for Reference type
 	 */
+	@Column(nullable = false)
 	private Integer referId;
 	
 	/**
 	 * Type of Notification eg. sms/email
 	 */
+	@Column(nullable = false)
 	private String notificationType;
 	
 	/**
@@ -56,31 +59,37 @@ public class NotificationDetails {
 	/**
 	 * Notification Id eg. Mobile No/ E-mail id
 	 */
+	@Column(nullable = false)
 	private String notificationId;
 	
 	/**
 	 * Notification Message
 	 */
+	@Column(columnDefinition = "TEXT", nullable = false)
 	private String notificationTemplate;
 	
 	/**
 	 * Notification Time (Time which notification needs to send)
 	 */
+	@Column(nullable = false)
 	private LocalDateTime notificationTime;
 	
 	/**
 	 * Notified Time (Time which notification send)
 	 */
+	@Column(nullable = true)
 	private LocalDateTime doneTime;
 	
 	/**
 	 * Instant Message Status
 	 */
+	@Column(nullable = false)
 	private String instant;
 	
 	/**
 	 * Notification Active status
 	 */
+	@Column(nullable = false)
 	private String activeStatus;
 	
 	/**
@@ -93,6 +102,7 @@ public class NotificationDetails {
 	/**
 	 * Branch Id of client
 	 */
+	@Column(nullable = false)
 	private Integer branchId;
 	
 	/**

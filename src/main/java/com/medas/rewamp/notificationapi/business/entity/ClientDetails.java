@@ -1,5 +1,6 @@
 package com.medas.rewamp.notificationapi.business.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,14 +22,14 @@ public class ClientDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer clientId;
-	
 	/**
 	 * Unique client Identification Id
 	 */
+	@Column(nullable = false)
 	private String clientUid;
-	
+	@Column(nullable = false)
 	private String clientName;
-	
+	@Column(nullable = false)
 	private String activeStatus;
 
 	public ClientDetails(Integer clientId) {
