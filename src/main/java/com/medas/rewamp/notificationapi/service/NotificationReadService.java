@@ -71,16 +71,24 @@ public class NotificationReadService {
 		if (notificationType.equals(CommonConstants.SMS)) {
 			SmsVendorVO vendor = dao.getVendorDetails(data);
 			// HTTP
-			if (vendor != null && vendor.getType().equals(CommonConstants.HTTP)) {
-				String url = vendor.getUrl().replace("#msg#", data.getNotificationTemplate()).replace("#mobileno#", data.getNotificationId());
-				log.info("SMS details: {}", data);
-				uriConnect.sendHTTPRequest(url);
-				done = true;
+			if (vendor != null) {
+				if(vendor.getType().equals(CommonConstants.HTTP)) {
+					String url = vendor.getUrl().replace("#msg#", data.getNotificationTemplate()).replace("#mobileno#", data.getNotificationId());
+					log.info("SMS details: {}", data);
+					uriConnect.sendHTTPRequest(url);
+					done = true;
+				}
+			} else {
+				log.error("No SMS Setup for clientId: {}", data.getClientId());
 			}
 		} else if(notificationType.equals(CommonConstants.EMAIL)) {
 			MailSetupVO mailSetup = dao.getMailAuthenticationDetails(data);
-			mailSender.sendMail(mailSetup, data);
-			done = true;
+			if (mailSetup != null) {
+				mailSender.sendMail(mailSetup, data);
+				done = true;
+			} else {
+				log.error("No Mail Setup for clientId: {}", data.getClientId());
+			}
 		}
 		if (done) {
 			dao.updateNotificationDoneStatus(data);
